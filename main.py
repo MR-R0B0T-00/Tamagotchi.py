@@ -1,88 +1,49 @@
 import schedule
+import pyglet
+from my_pet import Dog
+from pyglet.window import key
+
+window = pyglet.window.Window(300, 300, caption='Tamagotchi.py')
+background = pyglet.resource.image('img/backgrounds/bg_main.png')
+buttons_batch = pyglet.graphics.Batch()
+pet = Dog('Korgy')
+buttons_img = ['img/sprites/menu/status.png', 'img/sprites/menu/food.png',
+               'img/sprites/menu/health.png', 'img/sprites/menu/enjoy.png',
+               'img/sprites/menu/money.png']
+buttons = [pyglet.image.load(img) for img in buttons_img]
+status_sprite = pyglet.sprite.Sprite(buttons[0], x=8, y=250, batch=buttons_batch)
+food_sprite = pyglet.sprite.Sprite(buttons[1], x=68, y=250, batch=buttons_batch)
+health_sprite = pyglet.sprite.Sprite(buttons[2], x=128, y=250, batch=buttons_batch)
+enjoy_sprite = pyglet.sprite.Sprite(buttons[3], x=188, y=250, batch=buttons_batch)
+money_sprite = pyglet.sprite.Sprite(buttons[4], x=248, y=250, batch=buttons_batch)
 
 
-class Pet:
-    def __init__(self, name):
-        self.name = name
-        self.age = 0
-        self.health = 100
-        self.hungry = 30
-        self.fun = 70
-        self.sleep = 100
-
-    def status(self):
-        print(f'== {self.name} ==')
-        print(f'** Возраст: {self.age}')
-        print(f'** Здоровье: {self.health}%')
-        print(f'** Голод: {self.hungry}%')
-        print(f'** Настроение: {self.fun}%')
-        print(f'** Сон: {self.sleep}%')
-
-    def eat(self):
-        if self.hungry > 0:
-            self.hungry -= 10
-            if self.hungry < 0:
-                self.hungry = 0
-        print('Голод --')
-
-    def funny(self):
-        if self.fun < 100:
-            self.fun += 10
-            if self.fun > 100:
-                self.fun = 100
-        print('Веселье ++')
-
-    def birthday(self):
-        self.age += 1
-        print('Возраст ++')
-
-    def to_heal(self):
-        if self.health < 100:
-            self.health += 10
-            if self.health > 100:
-                self.health = 100
-        print('Здоровье ++')
-
-    def to_sleep(self):
-        if self.sleep < 100:
-            self.sleep += 10
-            if self.sleep > 100:
-                self.sleep = 100
-        print('Сон ++')
-
-    def not_eat(self):
-        self.hungry += 10
-        if self.hungry > 100:
-            self.hungry = 100
-        print('Голод ++')
-
-    def not_sleep(self):
-        self.sleep -= 10
-        if self.sleep < 0:
-            self.sleep = 0
-        print('Сон --')
+# pyglet.font.add_file('fonts/pixeltiny.ttf')
+# pixel_font = pyglet.font.load('PixelTiny')
+# label_name = pyglet.text.Label(pet.name, x=window.width // 2, y=270, anchor_x='center',
+#                                font_name='PixelTiny', font_size=70)
 
 
-def run_game():
-    pet = Pet(input('Введите имя питомца: '))
-    schedule.every(5).seconds.do(pet.not_eat)
-    schedule.every(2).minutes.do(pet.not_sleep)
+# @window.event
+# def on_key_press(symbol, modifiers):
+#     if symbol == key.LEFT:
+#         pet_sprite.x -= 5
+def on_mouse_press(x, y, button, modifiers):
+    if button == pyglet.window.mouse.LEFT:
+        print(x, y)
 
-    def update():
-        schedule.run_pending()
 
-    while True:
-        cmd = input('Введите команду: ')
-        if cmd == 'status':
-            pet.status()
-        elif cmd == 'feed':
-            pet.eat()
-        elif cmd == 'to heal':
-            pet.to_heal()
-        elif cmd == 'entertain':
-            pet.funny()
-        update()
+window.push_handlers(on_mouse_press)
+
+
+@window.event
+def on_draw():
+    window.clear()
+    background.blit(0, 0)
+    pet.sprite.draw()
+    buttons_batch.draw()
 
 
 if __name__ == '__main__':
-    run_game()
+    pyglet.clock.schedule_interval(pet.update, interval=0.6)
+    pyglet.app.run()
