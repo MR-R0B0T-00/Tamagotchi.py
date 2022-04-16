@@ -1,31 +1,27 @@
 import pyglet
 
 
-class Dog:
+class Animal:
     def __init__(self, name):
         self.name = name
         self.age = 0
         self.health = 100
         self.hungry = 30
-        self.images = [pyglet.resource.image('img/sprites/animals/dog_1.png'),
-                       pyglet.resource.image('img/sprites/animals/dog_2.png'),
-                       pyglet.resource.image('img/sprites/animals/dog_3.png')]
-        self.animation = pyglet.image.Animation.from_image_sequence(self.images, duration=0.6, loop=True)
-        self.sprite = pyglet.sprite.Sprite(self.animation, x=150 - 22, y=150 - 85)
+        self.sleep = 25
         self.right_move = True
         self.left_move = False
 
     def update(self, dt):  # dt - Это интервал, без него функция не работает
-        if self.right_move:
+        if self.right_move and self.sprite.x >= 20:
             self.sprite.x -= 20
-            if self.sprite.x <= 0:
-                self.right_move = False
-                self.left_move = True
-        if self.left_move:
+        else:
+            self.right_move = False
+            self.left_move = True
+        if self.left_move and self.sprite.x <= 230:
             self.sprite.x += 20
-            if self.sprite.x >= 230:
-                self.right_move = True
-                self.left_move = False
+        else:
+            self.right_move = True
+            self.left_move = False
 
     def status(self):
         print(f'== {self.name} ==')
@@ -78,3 +74,14 @@ class Dog:
         if self.sleep < 0:
             self.sleep = 0
         print('Сон --')
+
+
+class Dog(Animal):
+    def __init__(self, name):
+        super().__init__(name)
+        self.images = [pyglet.resource.image('img/sprites/animals/dog_1.png'),
+                       pyglet.resource.image('img/sprites/animals/dog_2.png'),
+                       pyglet.resource.image('img/sprites/animals/dog_3.png')]
+        self.animation = pyglet.image.Animation.from_image_sequence(self.images, duration=0.6, loop=True)
+        self.sprite = pyglet.sprite.Sprite(self.animation, x=150 - 22, y=155 - 85)
+
