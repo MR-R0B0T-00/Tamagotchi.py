@@ -2,6 +2,7 @@ import pyglet
 
 pyglet.resource.path = ['img/sprites/menu/', 'img/sprites/animals/', 'img/backgrounds/']
 pyglet.font.add_file('fonts/pixeltiny.ttf')
+font = pyglet.font.load('PixelTiny')
 pyglet.resource.reindex()
 
 background = pyglet.resource.image('bg_main.png')
@@ -28,7 +29,7 @@ def center_img(image):
 
 
 for img in [status_img, layout_img, soft_bar, food_img, toilet_img, games_img, shop_img, study_img,
-            aids_img, mail_img, info_img]:
+            aids_img, mail_img, info_img, background, work_img]:
     center_img(img)
 
 for dog in dog_img:

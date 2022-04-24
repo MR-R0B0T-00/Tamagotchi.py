@@ -13,11 +13,6 @@ class Animal(pyglet.sprite.Sprite):
         self.happy = 50
         self.toilet = 70
         self.money = 0
-        self.right_move = True
-        self.left_move = False
-
-    def status(self):
-        pass
 
     # def eat(self):
     #     if self.hungry > 0:
@@ -60,20 +55,20 @@ class Animal(pyglet.sprite.Sprite):
 
 class Dog(Animal):
     def __init__(self, name, *args, **kwargs):
-        super().__init__(name, *args, **kwargs)
         self.animation = pyglet.image.Animation.from_image_sequence(load_resources.dog_img, duration=1 / 3, loop=True)
-        self.image = self.animation
-        self.x, self.y = 150, 100
+        super().__init__(name, self.animation, *args, **kwargs)
+        self.x, self.y = 150, 70
+        self.right_move = True
+        self.left_move = False
 
     def update(self, dt):  # dt - Это интервал, без него функция не работает
-        super(Dog, self).update(dt)
-        if self.right_move and self.sprite.x >= 40:
-            self.sprite.x -= 20
+        if self.right_move and self.x <= 189:
+            self.x += 20
         else:
             self.right_move = False
             self.left_move = True
-        if self.left_move and self.sprite.x <= 250:
-            self.sprite.x += 20
+        if self.left_move and self.x >= 40:
+            self.x -= 20
         else:
             self.right_move = True
             self.left_move = False

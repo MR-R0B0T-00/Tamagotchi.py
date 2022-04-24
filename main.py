@@ -1,18 +1,21 @@
 import pyglet
 from pyglet.window import Window
-from game_func import draw_sprites, update
+from game_func import main_batch, on_mouse_release, pet, status_batch
 from load_resources import background
 
-window = Window(300, 300, caption='My PET')
+window = Window(220, 220, caption='My PET')
 
 
 @window.event
 def on_draw():
     window.clear()
-    background.blit(0, 0)
-    draw_sprites()
+    background.blit(140, 100)
+    main_batch.draw()
+    status_batch.draw()
 
+
+window.push_handlers(on_mouse_release)
 
 if __name__ == '__main__':
-    pyglet.clock.schedule_interval(update, 1 / 3)
+    pyglet.clock.schedule_interval(pet.update, 1 / 3)
     pyglet.app.run()
