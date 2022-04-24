@@ -1,8 +1,10 @@
 import pyglet
+import load_resources
 
 
-class Animal:
-    def __init__(self, name):
+class Animal(pyglet.sprite.Sprite):
+    def __init__(self, name, *args, **kwargs):
+        super(Animal, self).__init__(*args, **kwargs)
         self.name = name
         self.age = 0
         self.health = 100
@@ -11,25 +13,8 @@ class Animal:
         self.right_move = True
         self.left_move = False
 
-    def update(self, dt):  # dt - Это интервал, без него функция не работает
-        if self.right_move and self.sprite.x >= 20:
-            self.sprite.x -= 20
-        else:
-            self.right_move = False
-            self.left_move = True
-        if self.left_move and self.sprite.x <= 230:
-            self.sprite.x += 20
-        else:
-            self.right_move = True
-            self.left_move = False
-
     def status(self):
-        print(f'== {self.name} ==')
-        print(f'** Возраст: {self.age}')
-        print(f'** Здоровье: {self.health}%')
-        print(f'** Голод: {self.hungry}%')
-        print(f'** Настроение: {self.fun}%')
-        print(f'** Сон: {self.sleep}%')
+        pass
 
     def eat(self):
         if self.hungry > 0:
@@ -77,11 +62,21 @@ class Animal:
 
 
 class Dog(Animal):
-    def __init__(self, name):
-        super().__init__(name)
-        self.images = [pyglet.resource.image('img/sprites/animals/dog_1.png'),
-                       pyglet.resource.image('img/sprites/animals/dog_2.png'),
-                       pyglet.resource.image('img/sprites/animals/dog_3.png')]
-        self.animation = pyglet.image.Animation.from_image_sequence(self.images, duration=0.6, loop=True)
-        self.sprite = pyglet.sprite.Sprite(self.animation, x=150 - 22, y=155 - 85)
+    def __init__(self, name, *args, **kwargs):
+        super().__init__(name, load_resources.dog_img[0], *args, **kwargs)
+        self.images = load_resources.dog_img
+        self.animation = pyglet.image.Animation.from_image_sequence(self.images, duration=1 / 3, loop=True)
+        self.sprite = pyglet.sprite.Sprite(self.animation, x=150, y=100)
 
+    def update(self, dt):  # dt - Это интервал, без него функция не работает
+        super(Dog, self).update(dt)
+        if self.right_move and self.sprite.x >= 40:
+            self.sprite.x -= 20
+        else:
+            self.right_move = False
+            self.left_move = True
+        if self.left_move and self.sprite.x <= 250:
+            self.sprite.x += 20
+        else:
+            self.right_move = True
+            self.left_move = False
