@@ -1,14 +1,13 @@
 import pyglet
 import animals
 import load_resources
-from status_view import Status
+from menu_view import Menu
 from pyglet.sprite import Sprite
 
 main_batch = pyglet.graphics.Batch()
-status_batch = pyglet.graphics.Batch()
 
 pet = animals.Dog('Bob', batch=main_batch)
-status = Status(pet, batch=status_batch)
+menu = Menu(pet, batch=main_batch)
 
 soft_bar_up = pyglet.sprite.Sprite(load_resources.soft_bar, x=110, y=205, batch=main_batch)
 soft_bar_down = pyglet.sprite.Sprite(load_resources.soft_bar, x=110, y=15, batch=main_batch)
@@ -32,26 +31,48 @@ def push_button(btn, x, y):
         return True
 
 
+def push_close(x, y):
+    if 185 <= x <= 210 and 160 <= y <= 175:
+        return True
+
+
+def update_game(dt):
+    pet.update(dt)
+    menu.update(dt)
+
+
 def on_mouse_release(x, y, button, modifiers):
     if button == pyglet.window.mouse.LEFT:
         if push_button(status_button, x, y):
-            status.status_name_draw()
+            if not menu.active:
+                menu.active = True
         if push_button(food_button, x, y):
-            print('food')
+            if not menu.active:
+                menu.active = True
         if push_button(toilet_button, x, y):
-            print('toilet')
+            if not menu.active:
+                menu.active = True
         if push_button(game_button, x, y):
-            print('games')
+            if not menu.active:
+                menu.active = True
         if push_button(shop_button, x, y):
-            print('shop')
+            if not menu.active:
+                menu.active = True
         if push_button(study_button, x, y):
-            print('study')
+            if not menu.active:
+                menu.active = True
         if push_button(work_button, x, y):
-            print('work')
+            if not menu.active:
+                menu.active = True
         if push_button(aids_button, x, y):
-            print('aids')
+            if not menu.active:
+                menu.active = True
         if push_button(mail_button, x, y):
-            print('mail')
+            if not menu.active:
+                menu.active = True
         if push_button(info_button, x, y):
-            print('info')
-
+            if not menu.active:
+                menu.active = True
+        if menu.active:
+            if push_close(x, y):
+                menu.active = False
