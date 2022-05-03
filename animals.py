@@ -9,7 +9,7 @@ class Animal(pyglet.sprite.Sprite):
         self.age = 0
         self.health = 100
         self.hungry = 30
-        self.learning = 10
+        self.knowledge = 10
         self.happy = 50
         self.toilet = 70
         self.money = 0

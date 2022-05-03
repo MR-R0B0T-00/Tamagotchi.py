@@ -46,6 +46,7 @@ def on_mouse_release(x, y, button, modifiers):
         if push_button(status_button, x, y):
             if not menu.active:
                 menu.active = True
+                menu.status = True
         if push_button(food_button, x, y):
             if not menu.active:
                 menu.active = True
@@ -73,6 +74,9 @@ def on_mouse_release(x, y, button, modifiers):
         if push_button(info_button, x, y):
             if not menu.active:
                 menu.active = True
+                menu.info = True
         if menu.active:
             if push_close(x, y):
                 menu.active = False
+                menu.status = False
+                menu.info = False
