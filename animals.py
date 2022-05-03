@@ -76,3 +76,4 @@ class Dog(Animal):
         else:
             self.right_move = True
             self.left_move = False
+        self.age += 10
