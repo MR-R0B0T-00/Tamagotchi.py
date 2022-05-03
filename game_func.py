@@ -50,6 +50,7 @@ def on_mouse_release(x, y, button, modifiers):
         if push_button(food_button, x, y):
             if not menu.active:
                 menu.active = True
+                menu.food = True
         if push_button(toilet_button, x, y):
             if not menu.active:
                 menu.active = True
@@ -80,3 +81,4 @@ def on_mouse_release(x, y, button, modifiers):
                 menu.active = False
                 menu.status = False
                 menu.info = False
+                menu.food = False

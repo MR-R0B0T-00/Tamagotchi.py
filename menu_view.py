@@ -1,7 +1,17 @@
 import pyglet
 from pyglet.text import Label
 from datetime import datetime
-from load_resources import layout_img
+from load_resources import layout_img, foods_img
+
+
+def draw_text(list_text):
+    for text in list_text:
+        text.visible = True
+
+
+def clear_text(list_text):
+    for text in list_text:
+        text.visible = False
 
 
 class Menu(pyglet.sprite.Sprite):
@@ -14,6 +24,10 @@ class Menu(pyglet.sprite.Sprite):
         self.active = False
         self.status = False
         self.info = False
+        self.food = False
+        self.salad = pyglet.sprite.Sprite(foods_img[0], x=110, y=110, batch=self.text_batch)
+        self.meat = pyglet.sprite.Sprite(foods_img[1], x=110, y=110, batch=self.text_batch)
+        self.cake = pyglet.sprite.Sprite(foods_img[2], x=110, y=110, batch=self.text_batch)
         self.name = Label(self.pet.name, 'PixelTiny', 30,
                           batch=self.text_batch, x=110, y=175, anchor_x='center', anchor_y='center')
         self.age = Label('', 'PixelTiny', 30,
@@ -30,9 +44,9 @@ class Menu(pyglet.sprite.Sprite):
                           batch=self.text_batch, x=110, y=130, anchor_x='center', anchor_y='center')
         self.time = Label('', 'PixelTiny', 30,
                           batch=self.text_batch, x=110, y=110, anchor_x='center', anchor_y='center')
-        self.date.visible, self.time.visible = False, False
-        self.name.visible, self.health.visible, self.hungry.visible = False, False, False
-        self.knowledge.visible, self.money.visible, self.age.visible = False, False, False
+        self.list_text = [self.date, self.time, self.name, self.health, self.hungry,
+                          self.knowledge, self.money, self.age, self.salad, self.meat, self.cake]
+        clear_text(self.list_text)
 
     def update(self, dt):
         if self.active:
@@ -41,14 +55,15 @@ class Menu(pyglet.sprite.Sprite):
             self.visible = False
         self.draw_info()
         self.draw_status()
+        self.draw_food()
 
     def draw_info(self):
         if self.info:
             self.date.text = f'Date: {datetime.now().strftime("%d/%m/%Y")}'
             self.time.text = f'Time: {datetime.now().strftime("%H:%M:%S")}'
-            self.date.visible, self.time.visible = True, True
+            draw_text([self.date, self.time])
         if not self.info:
-            self.date.visible, self.time.visible = False, False
+            clear_text([self.date, self.time])
 
     def draw_status(self):
         if self.status:
@@ -57,8 +72,35 @@ class Menu(pyglet.sprite.Sprite):
             self.hungry.text = f'Hungry: {self.pet.hungry}%'
             self.knowledge.text = f'Knowledge: {self.pet.knowledge}%'
             self.money.text = f'Money: {self.pet.money} rub'
-            self.name.visible, self.health.visible, self.hungry.visible = True, True, True
-            self.knowledge.visible, self.money.visible, self.age.visible = True, True, True
+            draw_text([self.name, self.health, self.hungry, self.knowledge,
+                       self.money, self.age])
         if not self.status:
-            self.name.visible, self.health.visible, self.hungry.visible = False, False, False
-            self.knowledge.visible, self.money.visible, self.age.visible = False, False, False
+            clear_text([self.name, self.health, self.hungry, self.knowledge,
+                       self.money, self.age])
+
+    def draw_food(self):
+        if self.food:
+            self.meat.visible = True
+        if not self.food:
+            self.meat.visible = False
+
+    def draw_toilet(self):
+        pass
+
+    def draw_game(self):
+        pass
+
+    def draw_shop(self):
+        pass
+
+    def draw_study(self):
+        pass
+
+    def draw_work(self):
+        pass
+
+    def draw_hospital(self):
+        pass
+
+    def draw_email(self):
+        pass

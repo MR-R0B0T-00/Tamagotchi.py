@@ -21,6 +21,9 @@ info_img = pyglet.resource.image('gui_menu.png').get_region(180, 0, 20, 20)
 dog_img = [pyglet.resource.image('dog.png').get_region(0, 0, 45, 75),
            pyglet.resource.image('dog.png').get_region(45, 0, 45, 75),
            pyglet.resource.image('dog.png').get_region(90, 0, 45, 75)]
+foods_img = [pyglet.resource.image('food.png').get_region(0, 0, 44, 44),
+             pyglet.resource.image('food.png').get_region(44, 0, 44, 44),
+             pyglet.resource.image('food.png').get_region(88, 0, 44, 44)]
 
 
 def center_img(image):
@@ -34,3 +37,6 @@ for img in [status_img, layout_img, soft_bar, food_img, toilet_img, games_img, s
 
 for dog in dog_img:
     center_img(dog)
+
+for food in foods_img:
+    center_img(food)
