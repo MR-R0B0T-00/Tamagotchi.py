@@ -1,5 +1,6 @@
 import pyglet
 from pyglet.window import Window
+from buttons import text_batch
 from game_func import main_batch, update_game, events_mouse
 from load_resources import background
 
@@ -11,6 +12,7 @@ def on_draw():
     window.clear()
     background.blit(140, 100)
     main_batch.draw()
+    text_batch.draw()
 
 
 for event in events_mouse:

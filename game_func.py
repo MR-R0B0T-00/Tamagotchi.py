@@ -14,7 +14,7 @@ soft_bar_up = Sprite(load_resources.soft_bar, x=110, y=205, batch=main_batch)
 soft_bar_down = Sprite(load_resources.soft_bar, x=110, y=15, batch=main_batch)
 soft_bar_down.rotation = 180
 
-status_button = buttons.StatusButton(load_resources.status_img, batch=main_batch)
+status_button = buttons.StatusButton(pet=pet, img=load_resources.status_img, batch=main_batch)
 food_button = buttons.FoodButton(load_resources.food_img, batch=main_batch)
 toilet_button = buttons.ToiletButton(load_resources.toilet_img, batch=main_batch)
 game_button = buttons.GameButton(load_resources.games_img, batch=main_batch)
@@ -33,9 +33,10 @@ def push_close(x, y):
 
 
 def on_mouse_release(x, y, button, modifiers):
-    for btn in [status_button, food_button, toilet_button, game_button, shop_button, study_button,
-                work_button, aids_button, mail_button, info_button]:
-        if push_close(x, y):
+    for button in [status_button, food_button, toilet_button, game_button, shop_button, study_button,
+                   work_button, aids_button, mail_button, info_button]:
+        if button.active and push_close(x, y):
+            button.active = False
             layout.visible = False
 
 
@@ -50,8 +51,8 @@ def update_game(dt):
     for button in [status_button, food_button, toilet_button, game_button, shop_button, study_button,
                    work_button, aids_button, mail_button, info_button]:
         button.update(dt)
-        # if button.active_layout:
-        #     layout.visible = True
+        if button.active:
+            layout.visible = True
 
 # def on_mouse_release(x, y, button, modifiers):
 #     if button == pyglet.window.mouse.LEFT:
