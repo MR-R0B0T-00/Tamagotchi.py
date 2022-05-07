@@ -40,10 +40,6 @@ class Menu(pyglet.sprite.Sprite):
                                font_name='PixelTiny', font_size=30, batch=self.text_batch)
         self.money = Label('', x=20, y=75, anchor_y='center',
                            font_name='PixelTiny', font_size=30, batch=self.text_batch)
-        self.date = Label('', 'PixelTiny', 30,
-                          batch=self.text_batch, x=110, y=130, anchor_x='center', anchor_y='center')
-        self.time = Label('', 'PixelTiny', 30,
-                          batch=self.text_batch, x=110, y=110, anchor_x='center', anchor_y='center')
         self.list_text = [self.date, self.time, self.name, self.health, self.hungry,
                           self.knowledge, self.money, self.age, self.salad, self.meat, self.cake]
         clear_text(self.list_text)
@@ -59,8 +55,7 @@ class Menu(pyglet.sprite.Sprite):
 
     def draw_info(self):
         if self.info:
-            self.date.text = f'Date: {datetime.now().strftime("%d/%m/%Y")}'
-            self.time.text = f'Time: {datetime.now().strftime("%H:%M:%S")}'
+
             draw_text([self.date, self.time])
         if not self.info:
             clear_text([self.date, self.time])
